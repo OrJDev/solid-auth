@@ -91,6 +91,25 @@ importers:
       typescript: 4.9.3
       vite: 3.2.4
 
+  packages/auth0:
+    specifiers:
+      '@rollup/plugin-babel': ^6.0.3
+      '@rollup/plugin-node-resolve': ^15.0.1
+      '@solid-auth/core': workspace:*
+      '@solid-auth/oauth2': workspace:*
+      solid-js: ^1.6.2
+      solid-start: ^0.2.5
+      typescript: ^4.9.3
+    dependencies:
+      '@solid-auth/oauth2': link:../oauth2
+    devDependencies:
+      '@rollup/plugin-babel': 6.0.3_opjstonlpkhafnz76jsxdwq25a
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
+      '@solid-auth/core': link:../core
+      solid-js: 1.6.2
+      solid-start: 0.2.6_i2cnpwj3ojjdnkycik5yjsstli
+      typescript: 4.9.3
+
   packages/core:
     specifiers:
       '@solidjs/meta': ^0.28.0
@@ -2231,7 +2250,7 @@ packages:
       streamsearch: 1.1.0
 
   /bytes/3.0.0:
-    resolution: {integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=}
+    resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
     engines: {node: '>= 0.8'}
 
   /cac/6.7.14:
@@ -2610,7 +2629,7 @@ packages:
     dev: true
 
   /ee-first/1.1.1:
-    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
+    resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
   /electron-to-chromium/1.4.284:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
@@ -5732,7 +5751,7 @@ packages:
     dev: true
 
   /utils-merge/1.0.1:
-    resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
+    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
   /uuid/9.0.0:
