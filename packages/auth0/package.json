@@ -1,6 +1,6 @@
 {
-  "name": "@solid-auth/oauth2",
-  "version": "0.0.2",
+  "name": "@solid-auth/auth0",
+  "version": "0.0.0",
   "private": false,
   "repository": "https://github.com/OrJDev/solid-auth.git",
   "license": "ISC",
