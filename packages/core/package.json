@@ -1,6 +1,6 @@
 {
   "name": "@solid-auth/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "repository": "https://github.com/OrJDev/solid-auth.git",
   "license": "ISC",
