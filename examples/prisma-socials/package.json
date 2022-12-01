@@ -1,0 +1,41 @@
+{
+  "name": "prisma-socials",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "solid-start build",
+    "postbuild": "cp node_modules/.pnpm/**/@prisma/engines/*query*  .vercel/output/functions/render.func/ && cp prisma/schema.prisma .vercel/output/functions/render.func/",
+    "clean": "rm -rf .solid .turbo .vercel node_modules",
+    "dev": "solid-start dev",
+    "postinstall": "prisma generate",
+    "push": "prisma db push",
+    "start": "solid-start start"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.6.1",
+    "@solid-auth/core": "workspace:*",
+    "@solid-auth/socials": "workspace:*",
+    "@solidjs/meta": "^0.28.0",
+    "@solidjs/router": "^0.5.0",
+    "dotenv": "^16.0.3",
+    "solid-js": "^1.5.7",
+    "solid-start": "^0.2.1",
+    "undici": "5.11.0",
+    "zod": "^3.19.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-plugin-solid": "^0.8.0",
+    "prisma": "^4.6.1",
+    "solid-start-node": "^0.2.1",
+    "solid-start-vercel": "^0.2.5",
+    "typescript": "^4.8.3",
+    "vite": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

@@ -15,5 +15,11 @@
 '🌐 oauth2':
   - any: ['packages/oauth2/**']
 
+'💨 auth0':
+  - any: ['packages/auth0/**']
+
+'💠 credentials':
+  - any: ['packages/credentials/**']
+
 '🔏 form':
   - any: ['packages/form/**']

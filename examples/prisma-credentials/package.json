@@ -1,6 +1,6 @@
 {
-  "name": "example",
-  "version": "1.0.2",
+  "name": "prisma-credentials",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -15,8 +15,7 @@
   "dependencies": {
     "@prisma/client": "^4.6.1",
     "@solid-auth/core": "workspace:*",
-    "@solid-auth/oauth2": "workspace:*",
-    "@solid-auth/socials": "workspace:*",
+    "@solid-auth/credentials": "workspace:*",
     "@solidjs/meta": "^0.28.0",
     "@solidjs/router": "^0.5.0",
     "dotenv": "^16.0.3",

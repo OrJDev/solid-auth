@@ -59,12 +59,15 @@ export const createSolidAuthClient = (authURL: string) => {
         type: 'logout',
         opts,
       }),
-    login: async (
-      provider: string,
-      opts: Omit<IOpts, 'successRedirect' | 'failureRedirect'> & {
-        successRedirect: string
-        failureRedirect: string
-      }
+    login: async <K extends string>(
+      provider: K,
+      opts: K extends 'credentials'
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          { input: any }
+        : Omit<IOpts, 'successRedirect' | 'failureRedirect'> & {
+            successRedirect: string
+            failureRedirect: string
+          }
     ) =>
       await wrapper({
         type: 'login',

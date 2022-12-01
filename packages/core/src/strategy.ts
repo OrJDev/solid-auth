@@ -113,11 +113,12 @@ export abstract class Strategy<User, VerifyOptions> {
     message: string,
     request: Request,
     sessionStorage: SessionStorage,
-    options: AuthenticateOptions
+    options: AuthenticateOptions,
+    cause?: Error
   ): Promise<never> {
     // if a failureRedirect is not set, we throw a 401 Response or an error
     if (!options.failureRedirect) {
-      if (options.throwOnError) throw new AuthorizationError(message)
+      if (options.throwOnError) throw new AuthorizationError(message, cause)
       throw json<{ message: string }>({ message }, 401)
     }
 
@@ -149,23 +150,29 @@ export abstract class Strategy<User, VerifyOptions> {
     options: AuthenticateOptions
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
-    // if a successRedirect is not set, we return the user
-    if (!options.successRedirect) return user
-
     const session = await sessionStorage.getSession(
       request.headers.get('Cookie')
     )
-
     session.unset('opts')
     // if we do have a successRedirect, we redirect to it and set the user
     // in the session sessionKey
     session.set(options.sessionKey, user)
     session.set(options.sessionStrategyKey, options.name ?? this.name)
-    throw redirect(options.successRedirect, {
-      headers: {
-        'Set-Cookie': await sessionStorage.commitSession(session),
-        Location: options.successRedirect,
-      },
-    })
+    if (options.successRedirect) {
+      throw redirect(options.successRedirect, {
+        headers: {
+          'Set-Cookie': await sessionStorage.commitSession(session),
+          Location: options.successRedirect,
+        },
+      })
+    }
+    throw json(
+      { success: true },
+      {
+        headers: {
+          'Set-Cookie': await sessionStorage.commitSession(session),
+        },
+      }
+    )
   }
 }

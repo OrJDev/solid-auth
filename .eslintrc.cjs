@@ -21,7 +21,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: [
       './packages/*/tsconfig.json',
-      './example/tsconfig.json',
+      './examples/*/tsconfig.json',
       './tsconfig.json',
     ],
   },
