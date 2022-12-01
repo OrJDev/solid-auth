@@ -16,18 +16,20 @@ authenticator.use(
       prompt: 'none',
     },
     async ({ profile }) => {
-      const user = await prisma.user.upsert({
-        where: { id: profile.id },
-        create: {
+      let user = await prisma.user.findUnique({
+        where: {
           id: profile.id,
-          displayName: profile.__json.username,
-          avatar: profile.photos[0].value,
-        },
-        update: {
-          displayName: profile.__json.username,
-          avatar: profile.photos[0].value,
         },
       })
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            id: profile.id,
+            displayName: profile.__json.username,
+            avatar: profile.photos[0].value,
+          },
+        })
+      }
       return user
     }
   )

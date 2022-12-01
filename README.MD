@@ -145,8 +145,6 @@ export default function Example() {
 
 ### Protected Routes
 
-As you know SolidStart is loading the routeData while rendering the page, what causing it so the user can access protected content until he is being redirected to the login page from the createServerData$ function, but we don't want that, in fact we don't even want the page to be mounted / rendered if the user is not logged in so here is my solution:
-
 #### Creating Protected Layout
 
 ```tsx file=src/layouts/Protected.tsx
@@ -199,7 +197,7 @@ export const { routeData, Page } = withProtected((user) => {
   return <h1>Hey {user.displayName}</h1>
 })
 
-export default Page // we tell solid that this route is an actual page
+export default Page // The page should be default exported, we export `Page` above because we want to export the routeData and its just cleaner
 ```
 
 ## Credits / Inspired By
@@ -207,3 +205,4 @@ export default Page // we tell solid that this route is an actual page
 - [Remix Auth](https://github.com/sergiodxa/remix-auth)
 - [Remix Auth Socials](https://github.com/TheRealFlyingCoder/remix-auth-socials)
 - [Remix Auth OAuth2](https://github.com/sergiodxa/remix-auth-oauth2)
+- [Remix Auth Auth0](https://github.com/danestves/remix-auth-auth0)
