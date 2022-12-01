@@ -1,5 +1,11 @@
 # @solid-auth/core
 
+## 0.0.3
+
+### Patch Changes
+
+- [`b59e9d9`](https://github.com/OrJDev/solid-auth/commit/b59e9d961cae010d8e70c15a05a2b9f7f778b292) Thanks [@OrJDev](https://github.com/OrJDev)! - Add credentials provider
+
 ## 0.0.2
 
 ### Patch Changes
