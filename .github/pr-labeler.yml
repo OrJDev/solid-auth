@@ -1,11 +1,3 @@
-'🧪 test':
-  - any: ['**/*.{test,spec}.{ts,tsx,js,jsx}']
-
-'📝 documentation':
-  - any: ['**/*.{md,mdx}']
-  - any: ['example/**']
-  - any: ['docs/**']
-
 '🔑 socials':
   - any: ['packages/socials/**']
 
@@ -20,6 +12,3 @@
 
 '💠 credentials':
   - any: ['packages/credentials/**']
-
-'🔏 form':
-  - any: ['packages/form/**']
