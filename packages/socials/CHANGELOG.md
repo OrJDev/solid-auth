@@ -1,5 +1,13 @@
 # @solid-auth/socials
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`5abb43e`](https://github.com/OrJDev/solid-auth/commit/5abb43ed1d6d20fd1f23ff21a98601de25ba599a)]:
+  - @solid-auth/core@0.0.2
+  - @solid-auth/oauth2@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
