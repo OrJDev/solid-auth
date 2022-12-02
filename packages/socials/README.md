@@ -18,6 +18,7 @@ npm install @solid-auth/socials
 ### Setting up a social provider
 
 ```ts
+import { DiscordStrategy } from '@solid-auth/socials/dist/discord'
 authenticator.use(
   new DiscordStrategy(
     {
