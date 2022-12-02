@@ -1,7 +1,7 @@
 import type { StrategyVerifyCallback } from '@solid-auth/core'
 import type { OAuth2StrategyVerifyParams } from '@solid-auth/oauth2'
 import { OAuth2Strategy } from '@solid-auth/oauth2'
-import { SocialProvider } from '.'
+import { SocialProvider } from '..'
 
 export interface StravaStrategyOptions {
   clientID: string

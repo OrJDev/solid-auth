@@ -4,7 +4,7 @@ import {
   type OAuth2Profile,
   type OAuth2StrategyVerifyParams,
 } from '@solid-auth/oauth2'
-import { SocialProvider } from '.'
+import { SocialProvider } from '..'
 
 /**
  * @see https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes
