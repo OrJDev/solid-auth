@@ -53,11 +53,11 @@ Now that you have a session you can create the actual authenticator:
 ```ts file=src/server/auth.ts
 // src/server/auth.ts
 import { type User } from '@prisma/client' // the type of your user
+import { DiscordStrategy } from '@solid-auth/socials' // or any other provider
 import { serverEnv } from '~/env/server' // type safed process.env, doesn't really matter
 import { sessionStorage } from '~/utils/auth' // the sessionStorage we created before
 import { prisma } from './db/client' // or any other orm you wish to use
 import { Authenticator } from '@solid-auth/core'
-import { DiscordStrategy } from '@solid-auth/socials/dist/discord' // or any other provider
 
 export const authenticator = new Authenticator<User>(sessionStorage).use(
   new DiscordStrategy(
