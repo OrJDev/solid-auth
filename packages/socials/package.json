@@ -10,7 +10,8 @@
     ".": {
       "solid": "./dist/index.js",
       "default": "./dist/index.js"
-    }
+    },
+    "./dist/*": "./dist/*.js"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
