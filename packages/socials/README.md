@@ -9,6 +9,7 @@ Current strategies:
 - Google
 - Facebook
 - Microsoft
+- Strava
 
 ```bash
 npm install @solid-auth/socials
