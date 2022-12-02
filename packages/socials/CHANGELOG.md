@@ -1,5 +1,17 @@
 # @solid-auth/socials
 
+## 0.0.5
+
+### Patch Changes
+
+- [#13](https://github.com/OrJDev/solid-auth/pull/13) [`62c7ad8`](https://github.com/OrJDev/solid-auth/commit/62c7ad850778b557a1cd7227d6ffef55ba0b2a01) Thanks [@OrJDev](https://github.com/OrJDev)! - don't export all providers in 1 file
+
+- [#11](https://github.com/OrJDev/solid-auth/pull/11) [`ea550a5`](https://github.com/OrJDev/solid-auth/commit/ea550a5fc91a5891c945a006f66af1665aef8aba) Thanks [@schweden1997](https://github.com/schweden1997)! - add strategy to use Strava (https://www.strava.com) as an OAuth2 provider
+
+- Updated dependencies [[`62c7ad8`](https://github.com/OrJDev/solid-auth/commit/62c7ad850778b557a1cd7227d6ffef55ba0b2a01)]:
+  - @solid-auth/core@0.0.4
+  - @solid-auth/oauth2@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes

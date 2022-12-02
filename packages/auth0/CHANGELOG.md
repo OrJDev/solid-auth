@@ -1,5 +1,13 @@
 # @solid-auth/auth0
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`62c7ad8`](https://github.com/OrJDev/solid-auth/commit/62c7ad850778b557a1cd7227d6ffef55ba0b2a01)]:
+  - @solid-auth/core@0.0.4
+  - @solid-auth/oauth2@0.0.5
+
 ## 0.0.2
 
 ### Patch Changes
