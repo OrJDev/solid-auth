@@ -1,5 +1,11 @@
 # @solid-auth/socials
 
+## 0.1.0
+
+### Minor Changes
+
+- [#8](https://github.com/OrJDev/solid-auth/pull/8) [`816fe80`](https://github.com/OrJDev/solid-auth/commit/816fe805d348ff714252fc15362f402e2225e66a) Thanks [@schweden1997](https://github.com/schweden1997)! - add strategy to use Strava (https://www.strava.com) as an OAuth2 provider
+
 ## 0.0.4
 
 ### Patch Changes

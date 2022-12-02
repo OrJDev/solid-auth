@@ -1,5 +1,12 @@
 # example
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`816fe80`](https://github.com/OrJDev/solid-auth/commit/816fe805d348ff714252fc15362f402e2225e66a)]:
+  - @solid-auth/socials@0.1.0
+
 ## 1.0.1
 
 ### Patch Changes
