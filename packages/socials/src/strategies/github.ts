@@ -7,7 +7,7 @@ import {
   type OAuth2Profile,
   type OAuth2StrategyVerifyParams,
 } from '@solid-auth/oauth2'
-import { SocialProvider } from '.'
+import { SocialProvider } from '..'
 
 export type GitHubScope =
   | 'repo'

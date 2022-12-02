@@ -11,7 +11,8 @@
       "solid": "./dist/index.js",
       "default": "./dist/index.js"
     },
-    "./dist/*": "./dist/*.js"
+    "./dist/*": "./dist/*.js",
+    "./strategies/*": "./strategies/*.js"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
