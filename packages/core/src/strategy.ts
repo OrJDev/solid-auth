@@ -56,7 +56,7 @@ export interface AuthenticateOptions {
  * @throws {AuthorizationError} If the user was not found. Any other error will be ignored and thrown again by the strategy.
  */
 export interface StrategyVerifyCallback<User, VerifyParams> {
-  (params: VerifyParams): Promise<User>
+  (params: VerifyParams): Promise<User | null | undefined>
 }
 
 /**
@@ -158,16 +158,26 @@ export abstract class Strategy<User, VerifyOptions> {
     // in the session sessionKey
     session.set(options.sessionKey, user)
     session.set(options.sessionStrategyKey, options.name ?? this.name)
-    if (options.successRedirect) {
-      throw redirect(options.successRedirect, {
-        headers: {
-          'Set-Cookie': await sessionStorage.commitSession(session),
-          Location: options.successRedirect,
-        },
-      })
+    if (user !== null && user !== undefined) {
+      if (options.successRedirect) {
+        throw redirect(options.successRedirect, {
+          headers: {
+            'Set-Cookie': await sessionStorage.commitSession(session),
+            Location: options.successRedirect,
+          },
+        })
+      }
+      throw json(
+        { success: true },
+        {
+          headers: {
+            'Set-Cookie': await sessionStorage.commitSession(session),
+          },
+        }
+      )
     }
     throw json(
-      { success: true },
+      { success: false },
       {
         headers: {
           'Set-Cookie': await sessionStorage.commitSession(session),

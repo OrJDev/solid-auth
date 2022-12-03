@@ -22,6 +22,9 @@ authenticator.use(
     if (user.password !== input.password) {
       throw new Error('Invalid password')
     }
+    // just to check the return type, it's not needed
+    if (!user) return null
+    if (!user) return undefined
     return {
       email: user.email,
       id: user.id,
