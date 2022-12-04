@@ -1,5 +1,14 @@
 # @solid-auth/oauth2
 
+## 0.0.6
+
+### Patch Changes
+
+- [#20](https://github.com/OrJDev/solid-auth/pull/20) [`0de14dc`](https://github.com/OrJDev/solid-auth/commit/0de14dce9d0c2524e1178e4cb44f125d2cf66f29) Thanks [@OrJDev](https://github.com/OrJDev)! - downgrade peerDependencies core to 0.0.1
+
+- Updated dependencies [[`0de14dc`](https://github.com/OrJDev/solid-auth/commit/0de14dce9d0c2524e1178e4cb44f125d2cf66f29), [`21dd532`](https://github.com/OrJDev/solid-auth/commit/21dd53280623307e96564b44c091a2dfe1e7a0d1)]:
+  - @solid-auth/core@0.0.5
+
 ## 0.0.5
 
 ### Patch Changes
