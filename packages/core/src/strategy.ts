@@ -158,6 +158,7 @@ export abstract class Strategy<User, VerifyOptions> {
     // in the session sessionKey
     session.set(options.sessionKey, user)
     session.set(options.sessionStrategyKey, options.name ?? this.name)
+    let success = false
     if (user !== null && user !== undefined) {
       if (options.successRedirect) {
         throw redirect(options.successRedirect, {
@@ -167,17 +168,10 @@ export abstract class Strategy<User, VerifyOptions> {
           },
         })
       }
-      throw json(
-        { success: true },
-        {
-          headers: {
-            'Set-Cookie': await sessionStorage.commitSession(session),
-          },
-        }
-      )
+      success = true
     }
     throw json(
-      { success: false },
+      { success },
       {
         headers: {
           'Set-Cookie': await sessionStorage.commitSession(session),
