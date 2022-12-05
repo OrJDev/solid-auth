@@ -1,0 +1,49 @@
+import { A } from "solid-start";
+import { Description, Title } from "~/components";
+
+<Title>Create Authenticator</Title>
+<Description>
+  Use the Authenticator class to create a new authenticator.
+</Description>
+
+# Create Authenticator
+
+> > The authenticator will be used to manage the user in the server side, manage providers and verify users.
+
+```ts
+// src/server/auth.ts
+import { Authenticator } from "@solid-auth/core";
+import { type User } from "@prisma/client"; // the type of your user
+import { DiscordStrategy } from "@solid-auth/socials"; // or any other provider
+import { serverEnv } from "~/env/server"; // type safed process.env, doesn't really matter
+import { sessionStorage } from "~/utils/auth"; // the sessionStorage we created before
+import { prisma } from "./db/client"; // or any other orm you wish to use
+
+export const authenticator = new Authenticator<User>(sessionStorage).use(
+  new DiscordStrategy(
+    {
+      clientID: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+      // SITE_URL should be set to: http://localhost:3000 locally and https://yourdomain.com in production
+      callbackURL: process.env.SITE_URL + "/api/auth/discord/callback",
+    },
+    async ({ profile }) => {
+      let user = await prisma.user.findUnique({
+        where: {
+          id: profile.id,
+        },
+      });
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            id: profile.id,
+            displayName: profile.__json.username,
+            avatar: profile.photos[0].value,
+          },
+        });
+      }
+      return user;
+    }
+  )
+);
+```

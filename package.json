@@ -14,11 +14,16 @@
     "clean": "turbo clean && rm -rf node_modules pnpm-lock.yaml",
     "dev": "turbo dev",
     "lint": "eslint . --fix --ext .ts,.tsx,.js,.jsx",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "www": "cd www && pnpm dev"
   },
   "lint-staged": {
     "*.{js,json}": "prettier --write",
-    "*.{js,jsx,ts,tsx}": [
+    "packages/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "examples/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ],

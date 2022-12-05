@@ -1,0 +1,58 @@
+import { Description, Title } from "~/components";
+
+<Title>Microsoft</Title>
+<Description>
+  Using the microsoft provider let you use the microsoft oauth2 flow to
+  authenticate users.
+</Description>
+
+# MicrosoftStrategy
+
+Using the microsoft provider let you use the microsoft oauth2 flow to
+authenticate users.
+
+```bash
+npm install @solid-auth/socials
+```
+
+```ts
+import { authenticator } from "~/server/auth";
+import { MicrosoftStrategy } from "@solid-auth/socials";
+import { prisma } from "~/server/db/client";
+
+authenticator.use(
+  new MicrosoftStrategy(
+    {
+      clientID: process.env.MICROSOFT_CLIENT_ID,
+      clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
+      callbackURL: process.env.SITE_URL + "/api/auth/microsoft/callback",
+    },
+    async ({ profile }) => {
+      // do something with the profile, maybe store it?
+      let user = await prisma.user.findUnique({
+        where: {
+          id: profile.id,
+        },
+      });
+      //   you can also return undefined, but i recommend creating oauth2 user if it doesn't exist
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            id: profile.id,
+            displayName: profile.displayName,
+            avatar: profile.photos[0].value,
+          },
+        });
+      }
+      return user;
+    }
+  )
+);
+```
+
+### On the client
+
+```ts
+import { authClient } from "~/utils/auth";
+authClient.login("microsoft", { ...opts });
+```

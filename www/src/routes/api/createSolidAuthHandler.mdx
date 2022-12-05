@@ -1,0 +1,22 @@
+import { Description, Title } from "~/components";
+
+<Title>createSolidAuthHandler</Title>
+<Description>
+  Creates an auth api handler that will handle the dirt for us.
+</Description>
+
+# createSolidAuthHandler
+
+Creates an auth api handler that will handle the dirt for us.
+
+```ts
+// src/routes/api/auth/[...solidauth].ts
+import { authenticator } from "~/server/auth"; // the authenticator we created before
+import { type User } from "@prisma/client"; // the type of your user
+import { createSolidAuthHandler } from "@solid-auth/core";
+
+const handler = createSolidAuthHandler<User>(authenticator);
+
+export const POST = handler; // handle the login, logout etc
+export const GET = handler; // handle the callback
+```

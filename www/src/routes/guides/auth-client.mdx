@@ -1,0 +1,62 @@
+import { A } from "solid-start";
+import { Description, Title } from "~/components";
+
+<Title>Create a Client</Title>
+<Description>
+  Use the createSolidAuthClient function to create a client.
+</Description>
+
+# Create authClient
+
+> > An authClient will be used to login / logout from the client side.
+
+```ts
+// src/utils/auth.ts
+import { createCookieSessionStorage } from "solid-start";
+import { createSolidAuthClient } from "@solid-auth/core";
+
+const getBaseUrl = () => {
+  if (typeof window !== "undefined") return "";
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+};
+
+export const sessionStorage = createCookieSessionStorage({
+  cookie: {
+    name: "_session",
+    secrets: ["your-secret"],
+    secure: true,
+    maxAge: 60 * 60 * 24 * 30,
+  },
+});
+
+// Create the Solid Auth Client So You Can Actually Manage The User From The Client Side
+export const authClient = createSolidAuthClient(`${getBaseUrl()}/api/auth`);
+```
+
+### Login
+
+```ts
+// when using the credentials provider you will have to provide an input obj
+try {
+  await authClient.login({
+    input: {
+      myProperty: "",
+    },
+  });
+} catch (e) {
+  // this was thrown on the server side and handled by the client
+  console.log(e);
+}
+
+// when using an oauth2 provider you will have to provide successRedirect and failureRedirect
+authClient.login("discord" /* or any other provider*/, {
+  successRedirect: "/", // where to redirect the user after the login
+  failureRedirect: "/account", // where to redirect the user if the login failed
+});
+```
+
+### Logout
+
+```ts
+authClient.logout({ redirectTo: "/account" });
+```
