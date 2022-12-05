@@ -12,6 +12,8 @@ import {
   Scripts,
   Title,
 } from 'solid-start'
+import { AuthProvider } from './auth'
+import NavBar from './components/NavBar'
 
 export default function Root() {
   return (
@@ -22,13 +24,16 @@ export default function Root() {
         <Meta name='viewport' content='width=device-width, initial-scale=1' />
       </Head>
       <Body>
-        <Suspense>
-          <ErrorBoundary>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </ErrorBoundary>
-        </Suspense>
+        <AuthProvider>
+          <NavBar />
+          <Suspense>
+            <ErrorBoundary>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </ErrorBoundary>
+          </Suspense>
+        </AuthProvider>
         <Scripts />
       </Body>
     </Html>

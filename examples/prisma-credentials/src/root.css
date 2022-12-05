@@ -3,3 +3,11 @@ div {
   font-weight: bold;
   color: darkgray;
 }
+
+nav {
+  display: flex;
+  width: 100%;
+  background-color: red;
+  padding: 0.5rem;
+  align-items: center;
+}

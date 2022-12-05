@@ -1,4 +1,4 @@
-import type { VoidComponent } from 'solid-js'
+import { type VoidComponent } from 'solid-js'
 import { Match, Switch } from 'solid-js'
 import { Title, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'

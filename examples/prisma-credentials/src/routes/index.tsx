@@ -2,6 +2,7 @@ import { type VoidComponent, createSignal } from 'solid-js'
 import { Match, Switch } from 'solid-js'
 import { refetchRouteData, Title, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
+import { useSessionRefetch } from '~/auth'
 import { authenticator } from '~/server/auth'
 import { authClient } from '~/utils/auth'
 
@@ -15,6 +16,7 @@ const Home: VoidComponent = () => {
   const res = useRouteData<typeof routeData>()
   const [email, setEmail] = createSignal('')
   const [password, setPassword] = createSignal('')
+  const refetchSession = useSessionRefetch()
   return (
     <>
       <Title>Home</Title>
@@ -57,6 +59,7 @@ const Home: VoidComponent = () => {
                         email: email(),
                       },
                     })
+                    refetchSession()
                     await refetchRouteData()
                   } catch (e) {
                     console.log('auth error', e)
