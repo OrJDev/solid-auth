@@ -10,5 +10,8 @@
 '💨 auth0':
   - any: ['packages/auth0/**']
 
+'⭕ www':
+  - any: ['www/**']
+
 '💠 credentials':
   - any: ['packages/credentials/**']

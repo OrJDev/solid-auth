@@ -15,5 +15,5 @@
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
-  "ignore": ["prisma-credentials", "prisma-socials"]
+  "ignore": ["prisma-credentials", "prisma-socials", "www"]
 }
