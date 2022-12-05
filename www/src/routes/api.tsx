@@ -1,33 +1,37 @@
-import { DocsLayout } from "~/components";
+import { DocsLayout } from '~/components'
 
 export default function ApiLayout() {
   return (
     <DocsLayout
       items={[
         {
-          heading: "Base",
-          items: [
-            "Authenticator",
-            "createSolidAuthClient",
-            "createSolidAuthHandler",
-          ],
+          heading: 'Base',
+          items: ['createSolidAuthClient', 'createSolidAuthHandler'],
         },
         {
-          heading: "Strategies",
-          items: ["OAuth2", "Auth0", "Credentials"],
+          heading: 'Authenticator',
+          items: ['introduction', 'isAuthenticated', 'Login', 'Logout'],
         },
         {
-          heading: "Social Strategies",
+          heading: 'AuthClient',
+          items: ['Sign In', 'Sign Out'],
+        },
+        {
+          heading: 'Strategies',
+          items: ['OAuth2', 'Auth0', 'Credentials'],
+        },
+        {
+          heading: 'Social Strategies',
           items: [
-            "Google",
-            "Discord",
-            "GitHub",
-            "Facebook",
-            "Microsoft",
-            "Strava",
+            'Google',
+            'Discord',
+            'GitHub',
+            'Facebook',
+            'Microsoft',
+            'Strava',
           ],
         },
       ]}
     />
-  );
+  )
 }

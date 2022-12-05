@@ -1,0 +1,17 @@
+import { Description, Title } from '~/components'
+
+<Title>logout</Title>
+<Description>
+  logout is a server-side function that modify the session object to remove the
+  user object.
+</Description>
+
+# logout
+
+logout is a server-side function that modify the session object to include the
+user object.
+
+```ts
+// request comes from the server, api handler or serverData$
+authenticator.logout(request, { redirectTo: '/login' })
+```

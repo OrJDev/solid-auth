@@ -1,5 +1,5 @@
-import { Navigate } from "solid-start";
+import { Navigate } from 'solid-start'
 
 export default function GuidesPage() {
-  return <Navigate href="Authenticator" />;
+  return <Navigate href='createSolidAuthClient' />
 }

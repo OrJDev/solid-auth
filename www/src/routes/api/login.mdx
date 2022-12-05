@@ -1,0 +1,20 @@
+import { Description, Title } from '~/components'
+
+<Title>login</Title>
+<Description>
+  login is a server-side function that modify the session object to include the
+  user object.
+</Description>
+
+# login
+
+login is a server-side function that modify the session object to include the
+user object.
+
+```ts
+// request comes from the server, api handler or serverData$
+authenticator.authenticate('discord', request, {
+  successRedirect: '/dashboard',
+  failureRedirect: '/login',
+})
+```

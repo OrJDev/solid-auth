@@ -1,0 +1,39 @@
+import { Description, Title } from '~/components'
+
+<Title>sign in</Title>
+<Description>
+  login is a client-side function that makes a request to the server in order to
+  authenticate the user.
+</Description>
+
+# login
+
+login is a client-side function that makes a request to the server in order to
+authenticate the user.
+
+### Non credentials providers
+
+```ts
+authClient.login('discord' /* or any other provider*/, {
+  successRedirect: '/', // where to redirect the user after the login
+  failureRedirect: '/account', // where to redirect the user if the login failed
+})
+```
+
+### Credentials provider
+
+```ts
+try {
+  await authClient.login('credentials', {
+    input: {
+      email: '', // or any other params
+    },
+  })
+} catch (error) {
+  // handle error thrown by the server
+}
+```
+
+```
+
+```

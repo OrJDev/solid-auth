@@ -1,0 +1,30 @@
+import { Description, Title } from '~/components'
+
+<Title>isAuthenticated</Title>
+<Description>
+  isAuthenticated is a server-side function that returns the current logged in
+  user.
+</Description>
+
+# isAuthenticated
+
+isAuthenticated is a server-side function that returns the current logged in user.
+
+```ts
+// src/routes/example.tsx
+import { useRouteData } from "solid-start";
+import { createServerData$ } from 'solid-start/server'
+import { authenticator } from '~/server/auth' // the authenticator we created before
+
+export const routeData = () => {
+  return createServerData$(async (_, { request }) => {
+    return await authenticator.isAuthenticated(request)
+  })
+}
+export default function Example() {
+  const user = useRouteData<typeof routeData>(); // resource with type User | null | undefined
+  return (
+    {...}
+  );
+}
+```
