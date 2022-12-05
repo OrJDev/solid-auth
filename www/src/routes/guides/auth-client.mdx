@@ -38,7 +38,7 @@ export const authClient = createSolidAuthClient(`${getBaseUrl()}/api/auth`);
 ```ts
 // when using the credentials provider you will have to provide an input obj
 try {
-  await authClient.login({
+  await authClient.login("credentials", {
     input: {
       myProperty: "",
     },
