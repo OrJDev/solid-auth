@@ -1,0 +1,20 @@
+import { Description, Title } from "~/components";
+
+<Title>authenticator</Title>
+<Description>
+  The authenticator will handle all of the server side stuff for us.
+</Description>
+
+# Authenticator
+
+The authenticator will handle all of the server side stuff for us.
+
+```ts
+// src/server/auth.ts
+import { Authenticator } from "@solid-auth/core";
+import { sessionStorage } from "~/utils/auth"; // SolidStart sessionStorage
+type MyUserType = {
+  name: string;
+};
+export const authenticator = new Authenticator<MyUserType>(sessionStorage);
+```

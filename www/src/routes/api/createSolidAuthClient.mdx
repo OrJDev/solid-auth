@@ -1,0 +1,17 @@
+import { Description, Title } from "~/components";
+
+<Title>createSolidAuthClient</Title>
+<Description>
+  Creates an auth client that can be used in the client side.
+</Description>
+
+# createSolidAuthClient
+
+Creates an auth client that can be used in the client side.
+
+```ts
+// src/utils/auth.ts
+import { createSolidAuthClient } from "@solid-auth/core";
+const baseURL = "http://localhost:3000"; // The URL of your SolidAuth API Handler, will be used to login, logout, etc
+const myAuthClient = createSolidAuthClient(baseURL);
+```
