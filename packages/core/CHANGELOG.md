@@ -1,5 +1,11 @@
 # @solid-auth/core
 
+## 0.0.6
+
+### Patch Changes
+
+- [`7e936f9`](https://github.com/OrJDev/solid-auth/commit/7e936f98d16a42bb8ff2453a29fc411d53b55013) Thanks [@OrJDev](https://github.com/OrJDev)! - Allow logout to be used asynchronously when not providing redirectTo
+
 ## 0.0.5
 
 ### Patch Changes
