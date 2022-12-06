@@ -124,16 +124,26 @@ export class Authenticator<User = unknown> {
    *   await authenticator.logout(request, { redirectTo: "/login" });
    * }
    */
-  async logout(request: Request, options: { redirectTo: string }) {
+  async logout(request: Request, options?: { redirectTo?: string }) {
     const session = await this.sessionStorage.getSession(
       request.headers.get('Cookie')
     )
+    if (options?.redirectTo) {
+      return json(
+        { redirect: options.redirectTo },
+        {
+          headers: {
+            'Set-Cookie': await this.sessionStorage.destroySession(session),
+            Location: options.redirectTo,
+          },
+        }
+      )
+    }
     return json(
-      { redirect: options.redirectTo },
+      { success: true },
       {
         headers: {
           'Set-Cookie': await this.sessionStorage.destroySession(session),
-          Location: options.redirectTo,
         },
       }
     )

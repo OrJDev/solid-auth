@@ -73,11 +73,14 @@ const Home: VoidComponent = () => {
         >
           <Match when={res()}>
             <button
-              onClick={() =>
-                authClient.logout({
-                  redirectTo: '/',
-                })
-              }
+              onClick={async () => {
+                try {
+                  await authClient.logout()
+                  console.log('logged out')
+                } catch (e) {
+                  console.log(e)
+                }
+              }}
             >
               Logout
             </button>

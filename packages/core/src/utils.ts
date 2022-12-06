@@ -25,14 +25,9 @@ export const createSolidAuthHandler = <User>(
           })
         }
         case 'logout': {
-          if (!('redirectTo' in opts)) {
-            throw new Error('redirectTo is required')
-          }
-          try {
+          return await withApiHandler(async () => {
             return await authenticator.logout(event.request, opts)
-          } catch (e) {
-            return json({ error: eToString(e) })
-          }
+          })
         }
       }
     } else if (event.request.method === 'GET') {
@@ -54,7 +49,7 @@ export const createSolidAuthClient = (authURL: string) => {
   const wrapper = withHandler(authURL)
   type IOpts = Parameters<Authenticator['authenticate']>[2]
   return {
-    logout: async (opts: Parameters<Authenticator['logout']>[1]) =>
+    logout: async (opts?: { redirectTo?: string }) =>
       await wrapper({
         type: 'logout',
         opts,
