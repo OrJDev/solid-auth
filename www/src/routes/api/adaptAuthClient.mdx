@@ -1,0 +1,93 @@
+import { Description, Title } from '~/components'
+
+<Title>adaptAuthClient</Title>
+<Description>
+  Creates an auth client that will allow you to get the current logged in user.
+</Description>
+
+# createSolidAuthClient
+
+Creates an auth client that will allow you to get the current logged in user.
+
+```bash
+npm install @solid-auth/client
+```
+
+```ts
+// src/utils/auth.ts
+import { createSolidAuthClient } from '@solid-auth/core'
+import { sessionStorage } from './auth' // where your sessionStorage is located
+import { adaptAuthClient } from '@solid-auth/client'
+
+type MyUser = {...}
+
+const baseURL = 'http://localhost:3000' // The URL of your SolidAuth API Handler, will be used to login, logout, etc
+export const myAuthClient = createSolidAuthClient(baseURL)
+export const adpAuthClient = adaptAuthClient<MyUser>(myAuthClient, sessionStorage)
+```
+
+### Usage
+
+```tsx
+// root.tsx
+import { adpAuthClient } from "./utils/auth";
+{...}
+
+export default function Root() {
+  {...}
+  return (
+    <Html lang="en">
+      <Head>
+        <Title>Create JD App</Title>
+        <Meta charset="utf-8" />
+        <Meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <Body>
+      {/* the provider of the auth */}
+        <adpAuthClient.Provider>
+            <Suspense>
+              <ErrorBoundary>
+                <Routes>
+                  <FileRoutes />
+                </Routes>
+              </ErrorBoundary>
+            </Suspense>
+        </adpAuthClient.Provider>
+        <Scripts />
+      </Body>
+    </Html>
+  );
+}
+```
+
+### Getting the session
+
+```tsx
+//components/NavBar.tsx
+import { Show, type Component } from 'solid-js'
+import { adpAuthClient } from '~/utils/auth'
+
+const NavBar: Component = () => {
+  const session = adpAuthClient.useSession()
+  return (
+    <nav class='w-full h-12 px-12  bg-slate-300 flex gap-2 items-center'>
+      <Show
+        when={session().user}
+        keyed
+        fallback={<p class='font-bold text-lg text-gray-500'>Not Logged In</p>}
+      >
+        {(user) => (
+          <>
+            <Show when={user.avatar} keyed>
+              {(avatar) => <img src={avatar} class='w-10 h-10 rounded-full' />}
+            </Show>
+            <p class='text-white text-lg font-bold'>{user.displayName}</p>
+          </>
+        )}
+      </Show>
+    </nav>
+  )
+}
+
+export default NavBar
+```

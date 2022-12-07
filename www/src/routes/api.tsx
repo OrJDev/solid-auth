@@ -6,7 +6,11 @@ export default function ApiLayout() {
       items={[
         {
           heading: 'Base',
-          items: ['createSolidAuthClient', 'createSolidAuthHandler'],
+          items: [
+            'createSolidAuthClient',
+            'createSolidAuthHandler',
+            'adaptAuthClient',
+          ],
         },
         {
           heading: 'Authenticator',

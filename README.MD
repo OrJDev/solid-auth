@@ -9,6 +9,7 @@ This is a ported and improved version of [Remix Auth](https://github.com/sergiod
 - [@solid-auth/socials](https://github.com/OrJDev/solid-auth/tree/main/packages/socials) - OAuth2 socials providers (like discord, github, google, etc) based on the `@solid-auth/oauth2` strategy
 - [@solid-auth/auth0](https://github.com/OrJDev/solid-auth/tree/main/packages/auth0) - Auth0 strategy based on the `@solid-auth/core` and `@solid-auth/oauth2` strategy
 - [@solid-auth/credentials](https://github.com/OrJDev/solid-auth/tree/main/packages/credentials) - Use your own conditions, just return the user to the strategy and we will handle the rest for you.
+- [@solid-auth/client](https://www.npmjs.com/package/@solid-auth/client) - Client side package that will allow you to get the current session from the client side.
 
 ## Getting Started
 
