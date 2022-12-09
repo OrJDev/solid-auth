@@ -1,5 +1,11 @@
 # @solid-auth/credentials
 
+## 0.0.4
+
+### Patch Changes
+
+- [`653d9d4`](https://github.com/OrJDev/solid-auth/commit/653d9d4b0399d8c1a6891e3c13602465be88aaec) Thanks [@OrJDev](https://github.com/OrJDev)! - Fix peer deps ranges
+
 ## 0.0.3
 
 ### Patch Changes
