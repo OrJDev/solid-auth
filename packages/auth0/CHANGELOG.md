@@ -1,5 +1,14 @@
 # @solid-auth/auth0
 
+## 0.0.5
+
+### Patch Changes
+
+- [`653d9d4`](https://github.com/OrJDev/solid-auth/commit/653d9d4b0399d8c1a6891e3c13602465be88aaec) Thanks [@OrJDev](https://github.com/OrJDev)! - Fix peer deps ranges
+
+- Updated dependencies [[`653d9d4`](https://github.com/OrJDev/solid-auth/commit/653d9d4b0399d8c1a6891e3c13602465be88aaec)]:
+  - @solid-auth/oauth2@0.0.7
+
 ## 0.0.4
 
 ### Patch Changes
