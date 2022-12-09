@@ -16,7 +16,6 @@ export default function ApiLayout() {
           heading: 'Authenticator',
           items: [
             'introduction',
-            'Client',
             'isAuthenticated',
             'Login',
             'Logout',
