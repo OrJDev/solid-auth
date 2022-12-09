@@ -1,0 +1,58 @@
+import { A } from 'solid-start'
+import { Description, Title } from '~/components'
+
+<Title>Client</Title>
+<Description>This is how you can get the user in the client side.</Description>
+
+# Client
+
+> > This is how you can get the user in the client side.
+
+```tsx
+// src/components/NavBar.tsx
+import { Match, Switch, type VoidComponent } from 'solid-js'
+import { A } from 'solid-start'
+import { createServerData$ } from 'solid-start/server'
+import { authenticator } from '~/server/auth'
+import AuthTabs from './AuthTabs' // login and register button
+import Skeleton from './Skeleton' // just a nice placeholder
+import UserTabs from './UserTabs' /// logged in user tabs
+
+const NavBar: VoidComponent = () => {
+  const user = useUser()
+  return (
+    <nav class='fixed top-0 z-[9998] flex h-[60px] w-[100vw] items-center justify-between bg-white p-3'>
+      <ul class='mr-2 flex items-center gap-1.5 sm:mr-16'>
+        <Switch fallback={<AuthTabs />}>
+          <Match when={user.loading}>
+            <Skeleton />
+          </Match>
+          <Match when={user()}>
+            <UserTabs />
+          </Match>
+        </Switch>
+      </ul>
+    </nav>
+  )
+}
+
+export default NavBar
+
+const useUser = () => {
+  return createServerData$(
+    async (_, { request }) => {
+      return await authenticator.isAuthenticated(request)
+    },
+    { key: () => ['nav_user'] } // this will be used to refetch credentials auth user
+  )
+}
+```
+
+## Important
+
+When using credentials, make sure to refetch the routeData for `nav_user` when you login or when not using `redirectTo` - logout.
+
+```ts
+import { refetchRouteData } from 'solid-start'
+await refetchRouteData('nav_user')
+```

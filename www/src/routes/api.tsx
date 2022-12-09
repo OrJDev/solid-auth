@@ -14,7 +14,13 @@ export default function ApiLayout() {
         },
         {
           heading: 'Authenticator',
-          items: ['introduction', 'isAuthenticated', 'Login', 'Logout'],
+          items: [
+            'introduction',
+            'Client',
+            'isAuthenticated',
+            'Login',
+            'Logout',
+          ],
         },
         {
           heading: 'AuthClient',
