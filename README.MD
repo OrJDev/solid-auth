@@ -203,6 +203,8 @@ export default Page // The page should be default exported, we export `Page` abo
 
 ## Credits / Inspired By
 
+Thank you [Marco](https://github.com/schweden1997) for converting this app into a monorepo and maintaining it. 
+
 - [Remix Auth](https://github.com/sergiodxa/remix-auth)
 - [Remix Auth Socials](https://github.com/TheRealFlyingCoder/remix-auth-socials)
 - [Remix Auth OAuth2](https://github.com/sergiodxa/remix-auth-oauth2)
