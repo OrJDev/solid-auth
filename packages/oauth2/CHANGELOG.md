@@ -1,5 +1,11 @@
 # @solid-auth/oauth2
 
+## 0.0.8
+
+### Patch Changes
+
+- [#29](https://github.com/OrJDev/solid-auth/pull/29) [`030635e`](https://github.com/OrJDev/solid-auth/commit/030635e737b86c6825c306be54b30253752f852e) Thanks [@schweden1997](https://github.com/schweden1997)! - use Web Crypto Api insetad of the uuid package. Closes [#23](https://github.com/OrJDev/solid-auth/issues/23)
+
 ## 0.0.7
 
 ### Patch Changes
