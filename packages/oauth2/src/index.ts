@@ -5,7 +5,6 @@ import {
 } from '@solid-auth/core'
 import type { SessionStorage } from 'solid-start'
 import { json } from 'solid-start'
-import { v4 as uuid } from 'uuid'
 
 export interface OAuth2Profile {
   provider: string
@@ -291,7 +290,7 @@ export class OAuth2Strategy<
   }
 
   private generateState() {
-    return uuid()
+    return crypto.randomUUID()
   }
 
   /**
