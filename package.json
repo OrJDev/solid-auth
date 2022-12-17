@@ -13,6 +13,7 @@
     "build": "turbo build",
     "clean": "turbo clean && rm -rf node_modules pnpm-lock.yaml",
     "dev": "turbo dev",
+    "dev:packages": "turbo dev --filter=./packages/*",
     "lint": "eslint . --fix --ext .ts,.tsx,.js,.jsx",
     "prepare": "husky install",
     "www": "cd www && pnpm dev"
