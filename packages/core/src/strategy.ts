@@ -10,6 +10,10 @@ export interface AuthenticateOptions {
    */
   sessionKey: string
   /**
+   * The key of the session used to set the state during the oauth2 flow.
+   */
+  sessionStateKey?: string
+  /**
    * In what key of the session the errors will be set.
    * @default "auth:error"
    */
@@ -154,6 +158,7 @@ export abstract class Strategy<User, VerifyOptions> {
       request.headers.get('Cookie')
     )
     session.unset('opts')
+    session.unset(options.sessionStateKey)
     // if we do have a successRedirect, we redirect to it and set the user
     // in the session sessionKey
     session.set(options.sessionKey, user)

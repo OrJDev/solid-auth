@@ -134,18 +134,19 @@ export class OAuth2Strategy<
     const session = await sessionStorage.getSession(
       request.headers.get('Cookie')
     )
+
     let user: User | null = session.get(options.sessionKey) ?? null
     // User is already authenticated
     if (user) {
       return this.success(user, request, sessionStorage, options)
     }
 
-    const callbackURL = this.getCallbackURL(url)
     // Redirect the user to the callback URL
+    const callbackURL = this.getCallbackURL(url)
     if (url.pathname !== callbackURL.pathname) {
       const state = this.generateState()
       session.set(this.sessionStateKey, state)
-      session.set('opts', options)
+      session.set('opts', { ...options, sessionStateKey: this.sessionStateKey })
       const reURI = this.getAuthorizationURL(request, state).toString()
       return json(
         { redirect: reURI },
