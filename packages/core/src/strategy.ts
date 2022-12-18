@@ -158,7 +158,9 @@ export abstract class Strategy<User, VerifyOptions> {
       request.headers.get('Cookie')
     )
     session.unset('opts')
-    session.unset(options.sessionStateKey)
+    if (options.sessionStateKey) {
+      session.unset(options.sessionStateKey)
+    }
     // if we do have a successRedirect, we redirect to it and set the user
     // in the session sessionKey
     session.set(options.sessionKey, user)
