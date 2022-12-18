@@ -157,12 +157,22 @@ export abstract class Strategy<User, VerifyOptions> {
     const session = await sessionStorage.getSession(
       request.headers.get('Cookie')
     )
+    console.log(
+      '🚀 ~ file: strategy.ts:160 ~ Strategy<User, ~ session',
+      'session rertieved by success method',
+      session
+    )
     session.unset('opts')
     session.unset(options.sessionStateKey)
     // if we do have a successRedirect, we redirect to it and set the user
     // in the session sessionKey
     session.set(options.sessionKey, user)
     session.set(options.sessionStrategyKey, options.name ?? this.name)
+    console.log(
+      '🚀 ~ file: strategy.ts:171 ~ Strategy<User, ~ session',
+      'session before commit to frontend',
+      session
+    )
     let success = false
     if (user !== null && user !== undefined) {
       if (options.successRedirect) {

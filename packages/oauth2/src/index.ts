@@ -138,6 +138,11 @@ export class OAuth2Strategy<
     let user: User | null = session.get(options.sessionKey) ?? null
     // User is already authenticated
     if (user) {
+      console.log(
+        '🚀 ~ file: index.ts:141 ~ session',
+        'session after user is authed',
+        session
+      )
       return this.success(user, request, sessionStorage, options)
     }
 
@@ -147,6 +152,11 @@ export class OAuth2Strategy<
       const state = this.generateState()
       session.set(this.sessionStateKey, state)
       session.set('opts', { ...options, sessionStateKey: this.sessionStateKey })
+      console.log(
+        '🚀 ~ file: index.ts:155 ~ session',
+        'session before redirect to oauth provider',
+        session
+      )
       const reURI = this.getAuthorizationURL(request, state).toString()
       return json(
         { redirect: reURI },
@@ -176,6 +186,11 @@ export class OAuth2Strategy<
     const code = url.searchParams.get('code')
     if (!code) throw json({ message: 'Missing code.' }, { status: 400 })
 
+    console.log(
+      '🚀 ~ file: index.ts:189 ~ session',
+      'session after checks',
+      session
+    )
     // Get the access token
     const params = new URLSearchParams(this.tokenParams())
     params.set('grant_type', 'authorization_code')

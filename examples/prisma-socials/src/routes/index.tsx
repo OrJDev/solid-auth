@@ -1,12 +1,18 @@
-import { type VoidComponent } from 'solid-js'
-import { Match, Switch } from 'solid-js'
+import { Match, Switch, type VoidComponent } from 'solid-js'
 import { Title, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
 import { authenticator } from '~/server/auth'
-import { authClient } from '~/utils/auth'
+import { authClient, sessionStorage } from '~/utils/auth'
 
 export const routeData = () => {
   return createServerData$(async (_, { request }) => {
+    const session = await sessionStorage.getSession(
+      request.headers.get('Cookie')
+    )
+    console.log(
+      '🚀 ~ file: index.tsx:12 ~ returncreateServerData$ ~ session',
+      session
+    )
     return await authenticator.isAuthenticated(request)
   })
 }
