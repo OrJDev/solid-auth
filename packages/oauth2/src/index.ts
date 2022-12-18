@@ -166,12 +166,11 @@ export class OAuth2Strategy<
       throw json({ message: 'Missing state on URL.' }, { status: 400 })
 
     const stateSession = session.get(this.sessionStateKey)
-    if (!stateSession) {
+    if (!stateSession)
       throw json({ message: 'Missing state on session.' }, { status: 400 })
-    }
-    if (stateSession === stateUrl) {
-      session.unset(this.sessionStateKey)
-    } else throw json({ message: "State doesn't match." }, { status: 400 })
+
+    if (stateSession !== stateUrl)
+      throw json({ message: "State doesn't match." }, { status: 400 })
 
     const code = url.searchParams.get('code')
     if (!code) throw json({ message: 'Missing code.' }, { status: 400 })
