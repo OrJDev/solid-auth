@@ -2,6 +2,8 @@
 
 This is a ported and improved version of [Remix Auth](https://github.com/sergiodxa/remix-auth), it is using [Solid Sessions](https://start.solidjs.com/advanced/session) to manage the user sessions / cookies - based on [Solid Start](https://start.solidjs.com/)
 
+> It is highly recommended to start using [next auth for solid](https://github.com/OrJDev/auth-solid) instead, there is a still an oficial [pr](https://github.com/nextauthjs/next-auth/pull/6158) pending but is more secured and doesn't use solid-start cookieSessionStorageAPI.
+
 ## Packages
 
 - [@solid-auth/core](https://github.com/OrJDev/solid-auth/tree/main/packages/core) - Core package where the logic, types and strategies are defined
