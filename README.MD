@@ -15,7 +15,7 @@ This is a ported and improved version of [Remix Auth](https://github.com/sergiod
 
 ## Getting Started
 
-It is highly recommended to use [Create JD App](https://github.com/OrJDev/create-jd-app) to create your app, it will create a new app with all the necessary packages and configurations, so you won't need to worry about anything.
+It is  recommended to use [Create JD App](https://github.com/OrJDev/create-jd-app/releases/tag/1.0.112) to create your app, it will create a new app with all the necessary packages and configurations, so you won't need to worry about anything.
 
 ### Installation
 
