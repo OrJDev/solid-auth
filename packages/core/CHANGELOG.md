@@ -1,5 +1,11 @@
 # @solid-auth/core
 
+## 0.0.7
+
+### Patch Changes
+
+- [#32](https://github.com/OrJDev/solid-auth/pull/32) [`2265741`](https://github.com/OrJDev/solid-auth/commit/2265741ef79e9ecdc436f40fd76c6e71e7a665b8) Thanks [@schweden1997](https://github.com/schweden1997)! - remove the sessionStateKey from the session after the oauth2 state was verified
+
 ## 0.0.6
 
 ### Patch Changes
