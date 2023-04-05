@@ -6,3 +6,4 @@ dist
 !rollup.config.js
 !scripts/**/*.js
 .vercel
+.DS_Store
