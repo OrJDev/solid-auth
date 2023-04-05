@@ -1,0 +1,8 @@
+node_modules
+dist
+**/*.d.ts
+**/*.js
+**/*.jsx
+!rollup.config.js
+!scripts/**/*.js
+.vercel
