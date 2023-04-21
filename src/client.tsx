@@ -75,7 +75,7 @@ export function SessionProvider(props: SessionProviderProps) {
       __SOLIDAUTH._session = await getSession(event);
       return __SOLIDAUTH._session;
     } else if (
-      !event ||
+      !thisEvent ||
       __SOLIDAUTH._session === null ||
       now() < __SOLIDAUTH._lastSync
     ) {
