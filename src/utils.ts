@@ -41,7 +41,11 @@ export function objectIsSession(obj: any): obj is Session {
 }
 
 export const getEnv = (env: string) => {
-  if (typeof process.env !== "undefined" && !env.startsWith("VITE_")) {
+  if (
+    typeof process !== "undefined" &&
+    typeof process.env !== "undefined" &&
+    !env.startsWith("VITE_")
+  ) {
     return process.env[env];
   }
   if (env.startsWith("VITE_")) {
