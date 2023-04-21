@@ -69,7 +69,8 @@ export function SessionProvider(props: SessionProviderProps) {
   const [session, { refetch }] = createResource(async (_, opts: any) => {
     const thisEvent = opts?.refetching?.event;
     const storageEvent = thisEvent === "storage";
-    if (storageEvent || __SOLIDAUTH._session === undefined) {
+    const initEvent = thisEvent === "init" || thisEvent === undefined;
+    if (initEvent || storageEvent || __SOLIDAUTH._session === undefined) {
       __SOLIDAUTH._lastSync = now();
       __SOLIDAUTH._session = await getSession(event);
       return __SOLIDAUTH._session;
