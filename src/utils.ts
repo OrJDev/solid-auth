@@ -1,4 +1,5 @@
-import { Session } from "@auth/core/types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Session } from "@auth/core/types";
 
 export interface InternalUrl {
   origin: string;
@@ -38,3 +39,23 @@ export function now() {
 export function objectIsSession(obj: any): obj is Session {
   return obj && Object.keys(obj).length > 0;
 }
+
+export const getEnv = (env: string) => {
+  if (typeof process.env !== "undefined" && !env.startsWith("VITE_")) {
+    return process.env[env];
+  }
+  if (env.startsWith("VITE_")) {
+    return (import.meta as any).env[env];
+  }
+  return undefined;
+};
+
+export const conditionalEnv = (...envs: string[]) => {
+  for (const env of envs) {
+    const value = getEnv(env);
+    if (value) {
+      return value;
+    }
+  }
+  return undefined;
+};

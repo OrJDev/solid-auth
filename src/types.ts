@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type Session } from "@auth/core/types";
-import type { Accessor, JSX } from "solid-js";
+import type { JSX } from "solid-js";
 
 export interface AuthClientConfig {
   baseUrl: string;
@@ -14,28 +14,10 @@ export interface AuthClientConfig {
 
 export interface SessionProviderProps {
   children: JSX.Element;
-  session?: Session | null;
   baseUrl?: string;
   basePath?: string;
-  refetchInterval?: number;
   refetchOnWindowFocus?: boolean;
 }
-
-export interface CreateSessionOptions<R extends boolean> {
-  required: R;
-  onUnauthenticated?: () => void;
-}
-
-export type SessionContextInner<R extends boolean = false> = R extends true
-  ?
-      | { data: Session; status: "authenticated" }
-      | { data: null; status: "loading" }
-  :
-      | { data: Session; status: "authenticated" }
-      | { data: null; status: "unauthenticated" | "loading" };
-export type SessionContextValue<R extends boolean = false> = Accessor<
-  SessionContextInner<R>
->;
 
 export type LiteralUnion<T extends U, U = string> =
   | T

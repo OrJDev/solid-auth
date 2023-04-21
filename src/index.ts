@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Auth } from "@auth/core";
-import { Provider } from "@auth/core/providers";
+import type { Provider } from "@auth/core/providers";
 import type { AuthAction, AuthConfig, Session } from "@auth/core/types";
 
 export interface SolidAuthConfig extends Omit<AuthConfig, "providers"> {

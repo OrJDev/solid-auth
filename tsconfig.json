@@ -10,6 +10,7 @@
     "module": "esnext",
     "outDir": "./dist",
     "rootDir": "./src",
+    "types": ["vite/client", "node"],
     "strictNullChecks": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true

@@ -6,102 +6,89 @@ import type {
 } from "@auth/core/providers";
 import type { Session } from "@auth/core/types";
 import {
-  type Accessor,
+  type Resource,
   createContext,
-  createEffect,
-  createSignal,
-  onCleanup,
   useContext,
-  createMemo,
+  createResource,
+  onMount,
+  onCleanup,
+  createEffect,
 } from "solid-js";
+import { isServer } from "solid-js/web";
+import { type PageEvent, useRequest } from "solid-start/server";
 import type {
   SessionProviderProps,
-  SessionContextInner,
   LiteralUnion,
   SignInOptions,
   SignInAuthorizationParams,
   SignOutParams,
   AuthClientConfig,
 } from "./types";
-import { now } from "./utils";
+import { conditionalEnv, getEnv, now } from "./utils";
 import { parseUrl } from "./utils";
 
 export const __SOLIDAUTH: AuthClientConfig = {
-  baseUrl: parseUrl(process.env.AUTH_URL ?? process.env.VERCEL_URL).origin,
-  basePath: parseUrl(process.env.AUTH_URL).path,
+  baseUrl: parseUrl(conditionalEnv("AUTH_URL", "VERCEL_URL")).origin,
+  basePath: parseUrl(getEnv("AUTH_URL")).path,
   baseUrlServer: parseUrl(
-    process.env.AUTH_URL_INTERNAL ??
-      process.env.AUTH_URL ??
-      process.env.VERCEL_URL
+    conditionalEnv("AUTH_URL_INTERNAL", "AUTH_URL", "VERCEL_URL")
   ).origin,
-  basePathServer: parseUrl(
-    process.env.AUTH_URL_INTERNAL ?? process.env.AUTH_URL
-  ).path,
+  basePathServer: parseUrl(conditionalEnv("AUTH_URL_INTERNAL", "AUTH_URL"))
+    .path,
   _lastSync: 0,
   _session: undefined,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   _getSession: () => {},
 };
 
-export const SessionContext = createContext<SessionContextInner | undefined>(
-  undefined
-);
+export const SessionContext = createContext<
+  Resource<Session | null> | undefined
+>(undefined);
 
-export function createSession(): Accessor<SessionContextInner> {
+export function createSession(): Resource<Session | null> {
   // @ts-expect-error Satisfy TS if branch on line below
   const value: SessionContextValue<R> = useContext(SessionContext);
   if (!value && (import.meta as any).env.DEV) {
     throw new Error(
-      "[@solid-auth/base]: `createSession` must be wrapped in a <SessionProvider />"
+      "[~/auth]: `createSession` must be wrapped in a <SessionProvider />"
     );
   }
 
   return value;
 }
 
+const getUrl = (endpoint: string) => {
+  if (typeof window === "undefined") {
+    return `${__SOLIDAUTH.baseUrlServer}${endpoint}`;
+  }
+  return endpoint;
+};
+
 export function SessionProvider(props: SessionProviderProps) {
-  const { basePath, refetchInterval } = props;
-  if (basePath) __SOLIDAUTH.basePath = basePath;
-  const hasInitialSession = props.session !== undefined;
-  __SOLIDAUTH._lastSync = hasInitialSession ? now() : 0;
-  const [session, setSession] = createSignal(
-    (() => {
-      if (hasInitialSession) {
-        __SOLIDAUTH._session = props.session;
-      }
-      return props.session;
-    })()
-  );
-  const [loading, setLoading] = createSignal(!hasInitialSession);
+  const event = useRequest();
+  const [session, { refetch }] = createResource(async (_, opts: any) => {
+    const thisEvent = opts?.refetching?.event;
+    const storageEvent = thisEvent === "storage";
+    if (storageEvent || __SOLIDAUTH._session === undefined) {
+      __SOLIDAUTH._lastSync = now();
+      __SOLIDAUTH._session = await getSession(event);
+      return __SOLIDAUTH._session;
+    } else if (
+      !event ||
+      __SOLIDAUTH._session === null ||
+      now() < __SOLIDAUTH._lastSync
+    ) {
+      return __SOLIDAUTH._session;
+    } else {
+      __SOLIDAUTH._lastSync = now();
+      __SOLIDAUTH._session = await getSession(event);
+      return __SOLIDAUTH._session;
+    }
+  });
 
-  createEffect(() => {
-    __SOLIDAUTH._getSession = async ({ event } = {}) => {
-      try {
-        const storageEvent = event === "storage";
-        if (storageEvent || __SOLIDAUTH._session === undefined) {
-          __SOLIDAUTH._lastSync = now();
-          __SOLIDAUTH._session = await getSession();
-          setSession(__SOLIDAUTH._session);
-          return;
-        }
-
-        if (
-          !event ||
-          __SOLIDAUTH._session === null ||
-          now() < __SOLIDAUTH._lastSync
-        ) {
-          return;
-        }
-
-        __SOLIDAUTH._lastSync = now();
-        __SOLIDAUTH._session = await getSession();
-        setSession(__SOLIDAUTH._session);
-      } finally {
-        setLoading(false);
-        return __SOLIDAUTH._session;
-      }
-    };
-    __SOLIDAUTH._getSession();
+  onMount(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    __SOLIDAUTH._getSession = ({ event }) => refetch({ event });
 
     onCleanup(() => {
       __SOLIDAUTH._lastSync = 0;
@@ -123,28 +110,8 @@ export function SessionProvider(props: SessionProviderProps) {
     );
   });
 
-  createEffect(() => {
-    if (refetchInterval) {
-      const refetchIntervalTimer = setInterval(() => {
-        if (__SOLIDAUTH._session) {
-          __SOLIDAUTH._getSession({ event: "poll" });
-        }
-      }, refetchInterval * 1000);
-      onCleanup(() => clearInterval(refetchIntervalTimer));
-    }
-  });
-
-  const value = createMemo(() => ({
-    data: session(),
-    status: loading()
-      ? "loading"
-      : session()
-      ? "authenticated"
-      : "unauthenticated",
-  }));
-
   return (
-    <SessionContext.Provider value={value as any}>
+    <SessionContext.Provider value={session}>
       {props.children}
     </SessionContext.Provider>
   );
@@ -167,9 +134,9 @@ export async function signIn<
   const isEmail = providerId === "email";
   const isSupportingReturn = isCredentials || isEmail;
 
-  const signInUrl = `/api/auth/${
-    isCredentials ? "callback" : "signin"
-  }/${providerId}`;
+  const signInUrl = getUrl(
+    `/api/auth/${isCredentials ? "callback" : "signin"}/${providerId}`
+  );
 
   const _signInUrl = `${signInUrl}?${new URLSearchParams(authorizationParams)}`;
 
@@ -212,7 +179,7 @@ export async function signOut(options?: SignOutParams) {
   const { redirectTo = window.location.href, redirect } = options ?? {};
   const csrfTokenResponse = await fetch("/api/auth/csrf");
   const { csrfToken } = await csrfTokenResponse.json();
-  const res = await fetch(`/api/auth/signout`, {
+  const res = await fetch(getUrl(`/api/auth/signout`), {
     method: "post",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -233,8 +200,19 @@ export async function signOut(options?: SignOutParams) {
   return data;
 }
 
-export async function getSession(): Promise<Session | null> {
-  const res = await fetch(`/api/auth/session`);
+export async function getSession(event?: PageEvent): Promise<Session | null> {
+  let reqInit: RequestInit | undefined;
+  if (isServer && event) {
+    const cookie = event.request.headers.get("cookie");
+    if (cookie) {
+      reqInit = {
+        headers: {
+          cookie,
+        },
+      };
+    }
+  }
+  const res = await fetch(getUrl(`/api/auth/session`), reqInit);
   const data = await res.json();
   if (!res.ok) throw new Error(data.error);
   if (!data) return null;

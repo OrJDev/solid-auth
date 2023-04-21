@@ -128,6 +128,41 @@ const data = () => session()?.data;
 const user = () => data()?.user;
 ```
 
+This will return a resource, in Solid a resource can be used to trigger suspense so this could be used like:
+
+```tsx
+import { Show, type VoidComponent } from "solid-js";
+import { A } from "solid-start";
+import { createSession, signIn, signOut } from "~/auth/client";
+
+const AuthShowcase: VoidComponent = () => {
+  const session = createSession();
+  return (
+    <div class="flex flex-col items-center justify-center gap-4">
+      <Show
+        when={session()}
+        fallback={
+          <button
+            onClick={() => signIn("discord", { redirectTo: "/" })}
+            class="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+          >
+            Sign in
+          </button>
+        }
+      >
+        <span class="text-xl text-white">Welcome {session()?.user?.name}</span>
+        <button
+          onClick={() => signOut({ redirectTo: "/" })}
+          class="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        >
+          Sign out
+        </button>
+      </Show>
+    </div>
+  );
+};
+```
+
 ### Server Side
 
 ```ts
@@ -148,38 +183,4 @@ export const useSession = () => {
 const session = useSession();
 const loading = session.loading;
 const user = () => session()?.user;
-```
-
-### Example Component
-
-```tsx
-import { type VoidComponent } from "solid-js";
-import { createSession, signOut, signIn } from "@solid-auth/base/client";
-const AuthShowcase: VoidComponent = () => {
-  const sessionData = createSession();
-  return (
-    <div class="flex flex-col items-center justify-center gap-4">
-      <p class="text-center text-2xl text-white">
-        {sessionData().status === "authenticated" && (
-          <span>
-            Logged in as{" "}
-            {sessionData().data?.user?.name ?? sessionData().data?.user?.email}
-          </span>
-        )}
-      </p>
-      <button
-        class="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={() => {
-          if (sessionData().status === "authenticated") {
-            void signOut();
-          } else {
-            void signIn("github");
-          }
-        }}
-      >
-        {sessionData().status === "authenticated" ? "Sign out" : "Sign in"}
-      </button>
-    </div>
-  );
-};
 ```
