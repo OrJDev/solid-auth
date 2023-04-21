@@ -124,8 +124,7 @@ And then you could use the `createSession` hook:
 import { createSession } from "@solid-auth/base/client";
 const session = createSession();
 
-const data = () => session()?.data;
-const user = () => data()?.user;
+const user = () => session()?.user;
 ```
 
 This will return a resource, in Solid a resource can be used to trigger suspense so this could be used like:
