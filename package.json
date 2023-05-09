@@ -1,7 +1,7 @@
 {
   "name": "@solid-auth/base",
   "description": "Authentication for SolidStart.",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "type": "module",
   "files": [
     "client.*",
