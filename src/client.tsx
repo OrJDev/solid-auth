@@ -165,7 +165,7 @@ export async function signIn<
     return;
   }
   const error = new URL(data.url).searchParams.get("error");
-  if (res.ok) {
+  if (res.ok && !error) {
     await __SOLIDAUTH._getSession({ event: "storage" });
   }
   return {
