@@ -50,7 +50,7 @@ export function createSession(): Resource<Session | null> {
   const value: SessionContextValue<R> = useContext(SessionContext);
   if (!value && (import.meta as any).env.DEV) {
     throw new Error(
-      "[~/auth]: `createSession` must be wrapped in a <SessionProvider />"
+      "[@solid-auth/base]: `createSession` must be wrapped in a <SessionProvider />"
     );
   }
 
@@ -164,7 +164,7 @@ export async function signIn<
     if (data.url.includes("#")) window.location.reload();
     return;
   }
-  const error = new URL(data.url).searchParams.get("error");
+  const error = data.url ? new URL(data.url).searchParams.get("error") : null;
   if (res.ok && !error) {
     await __SOLIDAUTH._getSession({ event: "storage" });
   }
