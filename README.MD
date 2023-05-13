@@ -183,3 +183,105 @@ const session = useSession();
 const loading = session.loading;
 const user = () => session()?.user;
 ```
+
+### Providing a custom Session Type
+You might want to provide your own User type. In this case you can overwrite the default interface.
+
+```ts
+// session-type.d.ts
+import { DefaultSession } from "@auth/core/types";
+
+declare module "@auth/core/types" {
+  export interface Session extends DefaultSession {
+    user?: User
+  }
+}
+```
+
+## Using Credentials strategy
+
+```ts
+// routes/api/auth/[...solidauth].ts
+import { SolidAuth, type SolidAuthConfig } from '@solid-auth/base'
+import Credentials from '@auth/core/providers/credentials'
+import { z } from 'zod'
+import { DefaultSession } from '@auth/core/types'
+import { getUser, compareHash } from 'somewhere'
+
+// Your User type (note: password should not be sent back)
+type User = {
+  id: string
+  name: string
+}
+
+// Session to override default value
+type CustomSession = DefaultSession & {
+  user: User
+}
+
+export const authOpts: SolidAuthConfig = {
+  providers: [
+    Credentials({
+      async authorize(credentials): Promise<User | null> {
+        const { name, password } = credentials
+
+        // Add validation if needed - here using Zod
+        const schema = z.object({ name: z.string().min(1), password: z.string().min(1) })
+        if (!schema.safeParse({ name, password }).success) return null
+
+        // Fetch User from Database and check for password match - here using a hash-compare 
+        const user = await getUser({ name: credentials.name as string })
+
+        if (!user || !compareHash(user.password, credentials.password as string)) {
+          return null
+        }
+
+        return {
+          id: user.id,
+          name: user.name,
+        }
+      },
+    }),
+  ],
+  // Providing this option will prevent rerouting to @auth's built-in Form page
+  pages: {
+    signIn: '/login',
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      return { ...token, ...user }
+    },
+    session({ token, session }) {
+      return { ...session, user: { ...token } } as CustomSession
+    },
+  },
+}
+
+export const { GET, POST } = SolidAuth(authOpts)
+```
+
+```tsx
+// routes/login.tsx
+import { createSignal, JSX } from 'solid-js'
+import { signIn } from '@solid-auth/base/client'
+
+export default function LoginScreen() {
+  const [name, setName] = createSignal('')
+  const [password, setPassword] = createSignal('')
+
+  const login: JSX.IntrinsicElements['form']['onSubmit'] = async (e) => {
+    e.preventDefault()
+
+    const result = await signIn('credentials', { name: name(), password: password(), redirectTo: '/' })
+    if (result?.error) console.error('Username or Password incorrect')
+  }
+
+  return (
+    <form onSubmit={login}>
+      <input name="name" onInput={(e) => setName(e.currentTarget.value)} />
+      <input name="password" type="password" onInput={(e) => setPassword(e.currentTarget.value)} />
+      <button type="submit">Sign in</button>
+    </form>
+  )
+}
+```
