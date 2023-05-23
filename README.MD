@@ -1,3 +1,5 @@
+> If you are using SolidStart Astro, take a look at the [alpha](https://github.com/orjdev/solid-auth/tree/alpha) branch
+
 # Getting started
 
 Recommended to use [create-jd-app](https://github.com/OrJDev/create-jd-app)
