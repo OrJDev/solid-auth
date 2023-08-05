@@ -1,3 +1,5 @@
+> Moved to https://www.npmjs.com/package/@solid-mediakit/auth?activeTab=readme
+
 > If you are using SolidStart Astro, take a look at the [alpha](https://github.com/orjdev/solid-auth/tree/alpha) branch
 
 # Getting started
